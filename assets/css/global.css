@@ -9,11 +9,28 @@
     border: none;
 }
 
+a,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
 body {
     height: 100svh;
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    align-items: center;
+    font-family: "Inter", sans-serif, Arial, Helvetica;
+    font-weight: 400;
 }
 
 main {
@@ -21,5 +38,5 @@ main {
 }
 
 .container {
-    max-width: 55.9375rem;
+    max-width: 77.625rem;
 }
