@@ -29,25 +29,32 @@
             </div>
         </header>
         <main class="main" aria-label="Esta é a seção principal da Pokedex">
-            <div class="container">
-                <form name="pokemon-search" class="main__pokemon-search-container">
-                    <input
-                        aria-label="Este é um campo de busca por nome do pokemon"
-                        class="main__pokemon-input"
-                        type="text"
-                        name="pokemon-name"
-                        placeholder="Digite o nome ou o número do pokemon"
-                    />
-                    <button class="main__pokemon-search-button" type="submit">
-                        <img
-                            width="18"
-                            height="18"
-                            src="assets/img/icons/search.png"
-                            alt="Esta imagem representa um icone de lupa. Acione para realizar uma busca com o texto digitado no campo anterior."
+            <section class="pokemon-search" aria-label="Esta é a seção de busca por pokemons">
+                <div class="container">
+                    <form name="pokemon-search" class="pokemon-search__form">
+                        <input
+                            aria-label="Este é um campo de busca por nome do pokemon"
+                            class="pokemon-search__input"
+                            type="text"
+                            name="pokemon-name"
+                            placeholder="Digite o nome ou o número do pokemon"
                         />
-                    </button>
-                </form>
-            </div>
+                        <button class="pokemon-search__button" type="submit">
+                            <img
+                                width="18"
+                                height="18"
+                                src="assets/img/icons/search.png"
+                                alt="Esta imagem representa um icone de lupa. Acione para realizar uma busca com o texto digitado no campo anterior."
+                            />
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <section class="pokemon-list" aria-label="Esta é a seção de listagem de pokemons">
+                <div class="container">
+                    <ul class="pokemon-list__unordered-list"></ul>
+                </div>
+            </section>
         </main>
     </body>
 </html>
