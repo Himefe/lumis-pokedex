@@ -6,6 +6,7 @@
     justify-content: center;
     color: #1e1e1e;
     height: 6.1875rem;
+    margin-bottom: 2rem;
 
     & .container {
         width: 100%;
