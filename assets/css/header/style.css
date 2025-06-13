@@ -1,0 +1,16 @@
+.header {
+    background-color: #fff;
+    border-bottom: 1px solid #d9d9d9;
+
+    & .container {
+        padding: 1.875rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.header__link {
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
