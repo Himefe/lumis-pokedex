@@ -1,0 +1,22 @@
+export const ptBRPokemon = {
+    types: {
+        normal: "Normal",
+        fire: "Fogo",
+        water: "Agua",
+        grass: "Planta",
+        electric: "Eletrico",
+        ice: "Gelo",
+        fighting: "Lutador",
+        poison: "Veneno",
+        ground: "Terra",
+        flying: "Voador",
+        psychic: "Psiquico",
+        bug: "Inseto",
+        rock: "Pedra",
+        ghost: "Fantasma",
+        dragon: "Dragão",
+        dark: "Sombrio",
+        steel: "Metal",
+        fairy: "Fada",
+    },
+};
