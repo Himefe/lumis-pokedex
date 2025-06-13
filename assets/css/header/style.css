@@ -23,7 +23,7 @@
     display: inline-block;
 }
 
-.header__buttons-container {
+.header__navigation {
     display: flex;
     align-items: center;
     gap: 0.5rem;
