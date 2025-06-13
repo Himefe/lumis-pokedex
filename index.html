@@ -14,6 +14,8 @@
 
         <link rel="stylesheet" href="assets/css/style.css" />
 
+        <script type="module" src="assets/js/main.js" defer></script>
+
         <title>Lumis | Pokédex</title>
     </head>
     <body>
@@ -37,6 +39,8 @@
                             class="pokemon-search__input"
                             type="text"
                             name="pokemon-name"
+                            required="true"
+                            aria-required="true"
                             placeholder="Faça uma busca pelo nome do pokémon"
                         />
                         <button class="pokemon-search__button" type="submit">
@@ -52,68 +56,7 @@
             </section>
             <section class="pokemon-list" aria-label="Esta é a seção de listagem de pokemons">
                 <div class="container">
-                    <ul class="pokemon-list__cards">
-                        <li class="pokemon-list__card">
-                            <div class="pokemon-list__card-details">
-                                <span style="color: #11b047" class="pokemon-list__card-type">Planta</span>
-                                <span class="pokemon-list__card-number">#0012</span>
-                            </div>
-                            <div class="pokemon-list__card-image">
-                                <img width="143" height="143" src="assets/img/buba.png" alt="Esta imagem representa o pokemon Charmander." />
-                            </div>
-                            <strong class="pokemon-list__card-name">Charmander</strong>
-                        </li>
-                        <li class="pokemon-list__card">
-                            <div class="pokemon-list__card-details">
-                                <span style="color: #11b047" class="pokemon-list__card-type">Planta</span>
-                                <span class="pokemon-list__card-number">#0012</span>
-                            </div>
-                            <div class="pokemon-list__card-image">
-                                <img width="143" height="143" src="assets/img/buba.png" alt="Esta imagem representa o pokemon Charmander." />
-                            </div>
-                            <strong class="pokemon-list__card-name">Charmander</strong>
-                        </li>
-                        <li class="pokemon-list__card">
-                            <div class="pokemon-list__card-details">
-                                <span style="color: #11b047" class="pokemon-list__card-type">Planta</span>
-                                <span class="pokemon-list__card-number">#0012</span>
-                            </div>
-                            <div class="pokemon-list__card-image">
-                                <img width="143" height="143" src="assets/img/buba.png" alt="Esta imagem representa o pokemon Charmander." />
-                            </div>
-                            <strong class="pokemon-list__card-name">Charmander</strong>
-                        </li>
-                        <li class="pokemon-list__card">
-                            <div class="pokemon-list__card-details">
-                                <span style="color: #11b047" class="pokemon-list__card-type">Planta</span>
-                                <span class="pokemon-list__card-number">#0012</span>
-                            </div>
-                            <div class="pokemon-list__card-image">
-                                <img width="143" height="143" src="assets/img/buba.png" alt="Esta imagem representa o pokemon Charmander." />
-                            </div>
-                            <strong class="pokemon-list__card-name">Charmander</strong>
-                        </li>
-                        <li class="pokemon-list__card">
-                            <div class="pokemon-list__card-details">
-                                <span style="color: #11b047" class="pokemon-list__card-type">Planta</span>
-                                <span class="pokemon-list__card-number">#0012</span>
-                            </div>
-                            <div class="pokemon-list__card-image">
-                                <img width="143" height="143" src="assets/img/buba.png" alt="Esta imagem representa o pokemon Charmander." />
-                            </div>
-                            <strong class="pokemon-list__card-name">Charmander</strong>
-                        </li>
-                        <li class="pokemon-list__card">
-                            <div class="pokemon-list__card-details">
-                                <span style="color: #11b047" class="pokemon-list__card-type">Planta</span>
-                                <span class="pokemon-list__card-number">#0012</span>
-                            </div>
-                            <div class="pokemon-list__card-image">
-                                <img width="143" height="143" src="assets/img/buba.png" alt="Esta imagem representa o pokemon Charmander." />
-                            </div>
-                            <strong class="pokemon-list__card-name">Charmander</strong>
-                        </li>
-                    </ul>
+                    <ul class="pokemon-list__cards"></ul>
                 </div>
             </section>
         </main>
