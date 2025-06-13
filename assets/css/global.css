@@ -39,19 +39,13 @@ body {
 }
 
 main {
-    flex: 1;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
 }
 
 .container {
     width: 100%;
     padding-inline: 2rem;
-}
-
-@media screen and (max-width: 768px) {
-    .container {
-        max-width: 90%;
-    }
 }
