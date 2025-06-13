@@ -9,6 +9,10 @@
     border: none;
 }
 
+*:focus {
+    outline: 1px solid #d9d9d9;
+}
+
 a,
 a:visited,
 a:hover,
@@ -31,12 +35,23 @@ body {
     align-items: center;
     font-family: "Inter", sans-serif, Arial, Helvetica;
     font-weight: 400;
+    font-size: 1rem;
 }
 
 main {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .container {
-    max-width: 77.625rem;
+    width: 100%;
+    padding-inline: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        max-width: 90%;
+    }
 }

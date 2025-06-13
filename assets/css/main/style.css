@@ -1,0 +1,45 @@
+.main {
+    & .container {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.main__pokemon-search-container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    gap: 0.25rem;
+    max-width: 45rem;
+    border-radius: 1.75rem;
+    background-color: #f2f2f7;
+    justify-self: center;
+
+    & .main__pokemon-input {
+        width: 100%;
+        line-height: 1.5rem;
+        padding: 1rem;
+        padding-inline: 3.5rem;
+        letter-spacing: 0.03125rem;
+        font-family: "Roboto", sans-serif, Arial, Helvetica;
+        color: #49454f;
+        background-color: transparent;
+        border-radius: 1.75rem;
+
+        &::placeholder {
+            color: #49454f;
+        }
+    }
+
+    & .main__pokemon-search-button {
+        display: block;
+        position: absolute;
+        right: 1.1875rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        background-color: transparent;
+    }
+}
