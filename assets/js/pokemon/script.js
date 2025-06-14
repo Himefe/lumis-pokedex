@@ -34,39 +34,14 @@ const getPokemon = async (id) => {
     }
 };
 
-const getPokemonTypeColor = (type) => {
-    const typeColors = {
-        normal: "#A8A77A",
-        fire: "#F26C38",
-        water: "#4A90E2",
-        grass: "#11B047",
-        electric: "#F9D71C",
-        ice: "#8DE0E0",
-        fighting: "#D14234",
-        poison: "#9B4E9E",
-        ground: "#D7B75B",
-        flying: "#A085F7",
-        psychic: "#F7598C",
-        bug: "#9CBC2F",
-        rock: "#C2AB3C",
-        ghost: "#6A4C8A",
-        dragon: "#7451F9",
-        dark: "#5B4A3E",
-        steel: "#9EA2B8",
-        fairy: "#E07DBE",
-    };
-
-    return typeColors[type] || "#777";
-};
-
 const formatPokemonData = (pokemonData) => {
     const pokemonType = pokemonData?.types?.[0]?.type?.name;
     const pokemonName = pokemonData?.name;
 
     return {
         type: {
+            rawName: pokemonType || "-",
             name: ptBRPokemon.types[pokemonType] || pokemonType || "-",
-            color: getPokemonTypeColor(pokemonType),
         },
         name: capitalize(pokemonName) || "-",
         code: `#${String(pokemonData?.id).padStart(4, "0")}`,

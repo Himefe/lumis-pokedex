@@ -66,7 +66,171 @@
             color: #1e1e1e;
         }
 
+        & .pokemon-list__card[data-raw-type="normal"] {
+            & .pokemon-list__card-type {
+                color: var(--type-normal);
+            }
+            &:hover {
+                border: 2px solid var(--type-normal);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="fire"] {
+            & .pokemon-list__card-type {
+                color: var(--type-fire);
+            }
+            &:hover {
+                border: 2px solid var(--type-fire);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="water"] {
+            & .pokemon-list__card-type {
+                color: var(--type-water);
+            }
+            &:hover {
+                border: 2px solid var(--type-water);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="grass"] {
+            & .pokemon-list__card-type {
+                color: var(--type-grass);
+            }
+            &:hover {
+                border: 2px solid var(--type-grass);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="electric"] {
+            & .pokemon-list__card-type {
+                color: var(--type-electric);
+            }
+            &:hover {
+                border: 2px solid var(--type-electric);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="ice"] {
+            & .pokemon-list__card-type {
+                color: var(--type-ice);
+            }
+            &:hover {
+                border: 2px solid var(--type-ice);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="fighting"] {
+            & .pokemon-list__card-type {
+                color: var(--type-fighting);
+            }
+            &:hover {
+                border: 2px solid var(--type-fighting);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="poison"] {
+            & .pokemon-list__card-type {
+                color: var(--type-poison);
+            }
+            &:hover {
+                border: 2px solid var(--type-poison);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="ground"] {
+            & .pokemon-list__card-type {
+                color: var(--type-ground);
+            }
+            &:hover {
+                border: 2px solid var(--type-ground);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="flying"] {
+            & .pokemon-list__card-type {
+                color: var(--type-flying);
+            }
+            &:hover {
+                border: 2px solid var(--type-flying);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="psychic"] {
+            & .pokemon-list__card-type {
+                color: var(--type-psychic);
+            }
+            &:hover {
+                border: 2px solid var(--type-psychic);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="bug"] {
+            & .pokemon-list__card-type {
+                color: var(--type-bug);
+            }
+            &:hover {
+                border: 2px solid var(--type-bug);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="rock"] {
+            & .pokemon-list__card-type {
+                color: var(--type-rock);
+            }
+            &:hover {
+                border: 2px solid var(--type-rock);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="ghost"] {
+            & .pokemon-list__card-type {
+                color: var(--type-ghost);
+            }
+            &:hover {
+                border: 2px solid var(--type-ghost);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="dragon"] {
+            & .pokemon-list__card-type {
+                color: var(--type-dragon);
+            }
+            &:hover {
+                border: 2px solid var(--type-dragon);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="dark"] {
+            & .pokemon-list__card-type {
+                color: var(--type-dark);
+            }
+            &:hover {
+                border: 2px solid var(--type-dark);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="steel"] {
+            & .pokemon-list__card-type {
+                color: var(--type-steel);
+            }
+            &:hover {
+                border: 2px solid var(--type-steel);
+            }
+        }
+
+        & .pokemon-list__card[data-raw-type="fairy"] {
+            & .pokemon-list__card-type {
+                color: var(--type-fairy);
+            }
+            &:hover {
+                border: 2px solid var(--type-fairy);
+            }
+        }
+
         & .pokemon-list__card {
+            border: 2px solid transparent;
+            transition: border 0.3s ease-in-out;
             background-color: #f0f3ff;
             border-radius: 0.5rem;
             padding: 0.8125rem;

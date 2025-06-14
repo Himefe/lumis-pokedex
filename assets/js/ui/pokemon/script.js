@@ -10,9 +10,9 @@ export const showLoading = () => {
 };
 
 const generatePokemonCard = ({ name, code, image, type }) => {
-    return `<li class="pokemon-list__card">
+    return `<li class="pokemon-list__card" data-raw-type="${type.rawName}">
                 <div class="pokemon-list__card-details">
-                    <span style="color: ${type.color}" class="pokemon-list__card-type">${type.name}</span>
+                    <span class="pokemon-list__card-type">${type.name}</span>
                     <span class="pokemon-list__card-number">${code}</span>
                 </div>
                 <div class="pokemon-list__card-image">
