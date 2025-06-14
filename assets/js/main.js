@@ -1,12 +1,13 @@
-import { getCompletePokemonData, initSearchEvents } from "./pokemon/script.js";
-import { renderPokemonList, showLoading } from "./ui/pokemon/script.js";
+import { handleUpdatePaginationItems, initPaginationEvents } from "./pokemon/pagination.js";
+import { initSearchEvents } from "./pokemon/script.js";
+import { loadAndRenderPokemonsByPage } from "./ui/pokemon/script.js";
 
 const init = async () => {
     try {
-        showLoading();
-        const pokemons = await getCompletePokemonData();
+        const { totalPerPage } = await loadAndRenderPokemonsByPage();
+        handleUpdatePaginationItems(totalPerPage);
 
-        renderPokemonList(pokemons);
+        initPaginationEvents();
         initSearchEvents();
     } catch (error) {
         console.error("Ocorreu um erro ao listar os pokémons:", error);

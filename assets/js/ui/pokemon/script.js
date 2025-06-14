@@ -1,3 +1,6 @@
+import { handleTogglePaginationVisibility } from "../../pokemon/pagination.js";
+import { getCompletePokemonData } from "../../pokemon/script.js";
+
 export const showLoading = () => {
     const loadingEl = `<li class="pokemon-list__loading">Carregando...</li>`;
     const pokemonCards = document.querySelector(".pokemon-list__cards");
@@ -19,13 +22,28 @@ const generatePokemonCard = ({ name, code, image, type }) => {
             </li>`;
 };
 
+export const loadAndRenderPokemonsByPage = async (page = 1, limit = 18) => {
+    showLoading();
+    handleTogglePaginationVisibility(true);
+
+    const { data: pokemons, totalPerPage } = await getCompletePokemonData(page, limit);
+    renderPokemonList(pokemons);
+
+    return { totalPerPage };
+};
+
 export const renderPokemonList = (pokemons) => {
     const pokemonCards = document.querySelector(".pokemon-list__cards");
 
     if (!pokemons?.length) {
         pokemonCards.innerHTML = `<li class="pokemon-list__empty">Nenhum pokémon encontrado.</li>`;
+        handleTogglePaginationVisibility(true);
         return;
     }
 
     pokemonCards.innerHTML = pokemons.map(generatePokemonCard).join("");
+
+    if (pokemons.length > 1) {
+        handleTogglePaginationVisibility(false);
+    }
 };

@@ -1,6 +1,7 @@
 import { renderPokemonList, showLoading } from "../ui/pokemon/script.js";
 import { ptBRPokemon } from "../i18n/pt-BR.js";
 import { capitalize } from "../utils.js";
+import { handleTogglePaginationVisibility } from "./pagination.js";
 
 const getPokemons = async (offset = 0, limit = 18) => {
     try {
@@ -10,7 +11,10 @@ const getPokemons = async (offset = 0, limit = 18) => {
 
         const data = await response.json();
 
-        return data.results;
+        return {
+            data: data.results,
+            count: data.count || 0,
+        };
     } catch (error) {
         console.error("Ocorreu um erro ao buscar os pokémons:", error);
     }
@@ -56,7 +60,7 @@ const getPokemonTypeColor = (type) => {
 };
 
 const formatPokemonData = (pokemonData) => {
-    const pokemonType = pokemonData?.types[0]?.type?.name;
+    const pokemonType = pokemonData?.types?.[0]?.type?.name;
     const pokemonName = pokemonData?.name;
 
     return {
@@ -70,9 +74,9 @@ const formatPokemonData = (pokemonData) => {
     };
 };
 
-export const getCompletePokemonData = async (offset = 0, limit = 18) => {
+export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
     try {
-        const pokemons = await getPokemons(offset, limit);
+        const { data: pokemons, count } = await getPokemons((currentPage - 1) * limit, limit);
         const completeData = [];
 
         for (const pokemon of pokemons) {
@@ -83,11 +87,17 @@ export const getCompletePokemonData = async (offset = 0, limit = 18) => {
             completeData.push(formattedPokemonData);
         }
 
-        return completeData;
+        return {
+            data: completeData,
+            totalPerPage: Math.ceil(count / limit),
+        };
     } catch (error) {
-        console.log("Ocorreu um erro ao gerar os dados completos dos pokemons: ", error);
+        console.error("Ocorreu um erro ao gerar os dados completos dos pokemons: ", error);
 
-        return [];
+        return {
+            data: [],
+            totalPerPage: 0,
+        };
     }
 };
 
@@ -95,17 +105,30 @@ const handleSearchInput = async (event) => {
     event.preventDefault();
 
     showLoading();
+    handleTogglePaginationVisibility(true);
+
     const pokemonSearchInput = document.querySelector(".pokemon-search__input");
-    const pokemonData = await getPokemon(pokemonSearchInput.value.toLowerCase());
+    const pokemonSearchInputValue = pokemonSearchInput?.value?.trim()?.toLowerCase();
+
+    if (!pokemonSearchInputValue) {
+        const { data: pokemons } = await getCompletePokemonData();
+
+        renderPokemonList(pokemons);
+        return;
+    }
+
+    const pokemonData = await getPokemon(pokemonSearchInputValue);
 
     if (!pokemonData) {
         renderPokemonList([]);
         return;
     }
+
     const formattedPokemonData = formatPokemonData(pokemonData);
 
     renderPokemonList([formattedPokemonData]);
 };
+
 export const initSearchEvents = () => {
     const pokemonSearchForm = document.querySelector(".pokemon-search__form");
 

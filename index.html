@@ -33,31 +33,51 @@
         <main class="main" aria-label="Esta é a seção principal da Pokedex">
             <section class="pokemon-search" aria-label="Esta é a seção de busca por pokémons">
                 <div class="container">
-                    <form name="pokemon-search" class="pokemon-search__form">
+                    <form role="search" name="pokemon-search" class="pokemon-search__form">
                         <input
                             aria-label="Este é um campo de busca por nome do pokémon"
                             class="pokemon-search__input"
                             type="text"
                             name="pokemon-name"
-                            required="true"
-                            aria-required="true"
                             placeholder="Faça uma busca pelo nome do pokémon"
                         />
-                        <button class="pokemon-search__button" type="submit">
-                            <img
-                                width="18"
-                                height="18"
-                                src="assets/img/icons/search.png"
-                                alt="Esta imagem representa um ícone de lupa. Acione para realizar uma busca com o texto digitado no campo anterior."
-                            />
+                        <button aria-label="Buscar pokémon" class="pokemon-search__button" type="submit">
+                            <img width="18" height="18" src="assets/img/icons/search.png" alt="" role="presentation" />
                         </button>
                     </form>
                 </div>
             </section>
             <section class="pokemon-list" aria-label="Esta é a seção de listagem de pokemons">
                 <div class="container">
-                    <ul class="pokemon-list__cards"></ul>
+                    <ul class="pokemon-list__cards" aria-live="polite" aria-busy="true"></ul>
                 </div>
+            </section>
+            <section hidden class="pagination" aria-label="Esta é a seção de paginação. Ela contém os botões de navegação de páginas dos dados da listagem de pokémons">
+                <button class="pagination__prev" disabled aria-label="Página anterior">
+                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.6666 6.00004H1.33331M1.33331 6.00004L5.99998 10.6667M1.33331 6.00004L5.99998 1.33337"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                    Anterior
+                </button>
+                <div class="pagination__items" aria-live="polite" aria-busy="true" aria-label="Itens da paginação" role="group"></div>
+                <button aria-label="Página seguinte" class="pagination__next">
+                    Próximo
+                    <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.33331 6.00004H10.6666M10.6666 6.00004L5.99998 1.33337M10.6666 6.00004L5.99998 10.6667"
+                            stroke="currentColor"
+                            stroke-width="1.6"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </section>
         </main>
     </body>
