@@ -1,111 +1,148 @@
 import { renderPokemonList, showLoading } from "../ui/pokemon/script.js";
 import { ptBRPokemon } from "../i18n/pt-BR.js";
 import { capitalize } from "../utils.js";
-import { handleTogglePaginationVisibility } from "./pagination.js";
+import {
+  handleTogglePaginationVisibility,
+  handleUpdateActivePage,
+  handleUpdatePaginationItems,
+} from "./pagination.js";
 
 const getPokemons = async (offset = 0, limit = 18) => {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+  try {
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+    );
 
-        if (!response.ok) throw new Error("Ocorreu um erro ao buscar os pokémons");
+    if (!response.ok)
+      throw new Error(`Erro HTTP ${response.status} ao buscar os pokémons`);
 
-        const data = await response.json();
+    const data = await response.json();
 
-        return {
-            data: data.results,
-            count: data.count || 0,
-        };
-    } catch (error) {
-        console.error("Ocorreu um erro ao buscar os pokémons:", error);
-    }
+    return {
+      data: data.results,
+      count: data.count || 0,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar os pokémons: ", error);
+
+    return {
+      data: [],
+      count: 0,
+    };
+  }
 };
 
 const getPokemon = async (id) => {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
 
-        if (!response.ok) throw new Error("Ocorreu um erro ao buscar o pokemon");
+    if (!response.ok)
+      throw new Error(
+        `Erro HTTP ${response.status} ao buscar os dados do pokémon`
+      );
 
-        const data = await response.json();
+    const data = await response.json();
 
-        return data;
-    } catch (error) {
-        console.error("Ocorreu um erro ao buscar a especie do pokémon:", error);
-    }
+    return data;
+  } catch (error) {
+    console.error("Erro ao buscar o pokémon: ", error);
+
+    return null;
+  }
 };
 
 const formatPokemonData = (pokemonData) => {
-    const pokemonType = pokemonData?.types?.[0]?.type?.name;
-    const pokemonName = pokemonData?.name;
+  const pokemonType = pokemonData?.types?.[0]?.type?.name;
+  const pokemonName = pokemonData?.name;
 
-    return {
-        type: {
-            rawName: pokemonType || "-",
-            name: ptBRPokemon.types[pokemonType] || pokemonType || "-",
-        },
-        name: capitalize(pokemonName) || "-",
-        code: `#${String(pokemonData?.id).padStart(4, "0")}`,
-        image: pokemonData?.sprites?.front_default,
-    };
+  return {
+    type: {
+      rawName: pokemonType || "-",
+      name: ptBRPokemon.types[pokemonType] || pokemonType || "-",
+    },
+    name: capitalize(pokemonName) || "-",
+    code: `#${String(pokemonData?.id).padStart(4, "0")}`,
+    image: pokemonData?.sprites?.front_default,
+  };
 };
 
 export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
-    try {
-        const { data: pokemons, count } = await getPokemons((currentPage - 1) * limit, limit);
-        const completeData = [];
+  try {
+    const { data: pokemons, count } = await getPokemons(
+      (currentPage - 1) * limit,
+      limit
+    );
 
-        for (const pokemon of pokemons) {
-            const pokemonData = await getPokemon(pokemon.name);
+    const completeData = await Promise.all(
+      pokemons.map(async (pokemon) => {
+        const pokemonData = await getPokemon(pokemon.name);
 
-            const formattedPokemonData = formatPokemonData(pokemonData);
+        if (!pokemonData) return null;
 
-            completeData.push(formattedPokemonData);
-        }
+        return formatPokemonData(pokemonData);
+      })
+    );
 
-        return {
-            data: completeData,
-            totalPerPage: Math.ceil(count / limit),
-        };
-    } catch (error) {
-        console.error("Ocorreu um erro ao gerar os dados completos dos pokemons: ", error);
+    return {
+      data: completeData.filter(Boolean),
+      totalPerPage: Math.ceil(count / limit),
+    };
+  } catch (error) {
+    console.error(
+      "Ocorreu um erro ao gerar os dados completos dos pokemons: ",
+      error
+    );
 
-        return {
-            data: [],
-            totalPerPage: 0,
-        };
-    }
+    return {
+      data: [],
+      totalPerPage: 0,
+    };
+  }
 };
 
-const handleSearchInput = async (event) => {
-    event.preventDefault();
+const handleEmptySearch = async () => {
+  const { data: pokemons, totalPerPage } = await getCompletePokemonData();
 
-    showLoading();
-    handleTogglePaginationVisibility(true);
+  handleUpdatePaginationItems(totalPerPage);
+  handleUpdateActivePage(1);
+  renderPokemonList(pokemons);
+};
 
-    const pokemonSearchInput = document.querySelector(".pokemon-search__input");
-    const pokemonSearchInputValue = pokemonSearchInput?.value?.trim()?.toLowerCase();
+const handleSearchPokemon = async (id) => {
+  const pokemonData = await getPokemon(id);
 
-    if (!pokemonSearchInputValue) {
-        const { data: pokemons } = await getCompletePokemonData();
+  if (!pokemonData) {
+    renderPokemonList([]);
+    handleUpdatePaginationItems(1);
+    handleUpdateActivePage(1);
+    return;
+  }
 
-        renderPokemonList(pokemons);
-        return;
-    }
+  const formattedPokemon = formatPokemonData(pokemonData);
+  renderPokemonList([formattedPokemon]);
+  handleUpdatePaginationItems(1);
+  handleUpdateActivePage(1);
+};
 
-    const pokemonData = await getPokemon(pokemonSearchInputValue);
+const handleSubmitSearch = async (event) => {
+  event.preventDefault();
 
-    if (!pokemonData) {
-        renderPokemonList([]);
-        return;
-    }
+  showLoading();
+  handleTogglePaginationVisibility(true);
 
-    const formattedPokemonData = formatPokemonData(pokemonData);
+  const pokemonInput = document.querySelector(".pokemon-search__input")?.value;
+  const pokemonId = (pokemonInput || "").trim().toLowerCase();
 
-    renderPokemonList([formattedPokemonData]);
+  if (!pokemonId) {
+    await handleEmptySearch();
+    return;
+  }
+
+  await handleSearchPokemon(pokemonId);
 };
 
 export const initSearchEvents = () => {
-    const pokemonSearchForm = document.querySelector(".pokemon-search__form");
+  const pokemonSearchForm = document.querySelector(".pokemon-search__form");
 
-    pokemonSearchForm.addEventListener("submit", handleSearchInput);
+  pokemonSearchForm.addEventListener("submit", handleSubmitSearch);
 };
