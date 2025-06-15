@@ -79,23 +79,28 @@ const handlePagination = async ({ target }) => {
     if (!target.classList.contains("pagination__item--active")) {
       const page = Number(target.textContent);
 
-      await loadAndRenderPokemonsByPage(page);
+      const { totalPerPage } = await loadAndRenderPokemonsByPage(page);
       handleUpdateActivePage(page);
+      handleUpdatePaginationItems(totalPerPage);
 
       return;
     }
   }
 
   if (isNextTarget) {
-    await loadAndRenderPokemonsByPage(actualPage + 1);
+    const { totalPerPage } = await loadAndRenderPokemonsByPage(actualPage + 1);
     handleUpdateActivePage(actualPage + 1);
+    handleUpdatePaginationItems(totalPerPage);
 
     return;
   }
 
   if (isPrevTarget) {
-    await loadAndRenderPokemonsByPage(actualPage - 1);
+    const { totalPerPage } = await loadAndRenderPokemonsByPage(actualPage - 1);
     handleUpdateActivePage(actualPage - 1);
+    handleUpdatePaginationItems(totalPerPage);
+
+    return;
   }
 };
 

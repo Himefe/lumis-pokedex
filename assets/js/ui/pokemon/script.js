@@ -34,8 +34,12 @@ export const loadAndRenderPokemonsByPage = async (page = 1, limit = 18) => {
     renderPokemonList(pokemons);
     handleTogglePaginationVisibility(false);
     handleUpdatePaginationItems(totalPerPage);
+
+    return { totalPerPage };
   } catch (error) {
     console.error("Ocorreu um erro ao renderizar os pokemons");
+
+    return { totalPerPage: 0 };
   }
 };
 
