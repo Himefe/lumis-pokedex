@@ -6,7 +6,10 @@ import { getCompletePokemonData } from "../../pokemon/script.js";
 
 export const showLoading = () => {
   const pokemonCards = document.querySelector(".pokemon-list__cards");
-  pokemonCards.innerHTML = `<li class="pokemon-list__loading">Carregando...</li>`;
+  pokemonCards.innerHTML = Array.from(
+    { length: 18 },
+    () => `<li class=" pokemon-list__card pokemon-list__card--skeleton"></li>`
+  ).join("");
 };
 
 const generatePokemonCard = ({ name, code, image, type }) => {

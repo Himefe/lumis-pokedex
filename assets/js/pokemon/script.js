@@ -1,5 +1,5 @@
 import { renderPokemonList, showLoading } from "../ui/pokemon/script.js";
-import { ptBRPokemon } from "../i18n/pt-BR.js";
+import { ptBRDictionary } from "../i18n/pt-BR.js";
 import { capitalize } from "../utils.js";
 import {
   handleTogglePaginationVisibility,
@@ -58,11 +58,11 @@ const formatPokemonData = (pokemonData) => {
   return {
     type: {
       rawName: pokemonType || "-",
-      name: ptBRPokemon.types[pokemonType] || pokemonType || "-",
+      name: ptBRDictionary.pokemons.types[pokemonType] || pokemonType || "-",
     },
     name: capitalize(pokemonName) || "-",
     code: `#${String(pokemonData?.id).padStart(4, "0")}`,
-    image: pokemonData?.sprites?.front_default,
+    image: pokemonData?.sprites?.front_default || "assets/img/not-found.png",
   };
 };
 
@@ -103,9 +103,16 @@ export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
 const handleEmptySearch = async () => {
   const { data: pokemons, totalPerPage } = await getCompletePokemonData();
 
-  handleUpdatePaginationItems(totalPerPage);
+  handleUpdatePaginationItems(1, totalPerPage);
   handleUpdateActivePage(1);
   renderPokemonList(pokemons);
+};
+
+export const handleGetPaginationActivePage = () => {
+  return (
+    Number(document.querySelector(".pagination__item--active")?.textContent) ||
+    1
+  );
 };
 
 const handleSearchPokemon = async (id) => {
@@ -113,14 +120,14 @@ const handleSearchPokemon = async (id) => {
 
   if (!pokemonData) {
     renderPokemonList([]);
-    handleUpdatePaginationItems(1);
+    handleUpdatePaginationItems(1, 1);
     handleUpdateActivePage(1);
     return;
   }
 
   const formattedPokemon = formatPokemonData(pokemonData);
   renderPokemonList([formattedPokemon]);
-  handleUpdatePaginationItems(1);
+  handleUpdatePaginationItems(1, 1);
   handleUpdateActivePage(1);
 };
 
