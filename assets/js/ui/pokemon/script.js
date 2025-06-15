@@ -8,7 +8,7 @@ export const showLoading = () => {
   const pokemonCards = document.querySelector(".pokemon-list__cards");
   pokemonCards.innerHTML = Array.from(
     { length: 18 },
-    () => `<li class=" pokemon-list__card pokemon-list__card--skeleton"></li>`
+    () => `<li class=" pokemon-list__card pokemon-list__card--loading"></li>`
   ).join("");
 };
 
@@ -19,7 +19,7 @@ const generatePokemonCard = ({ name, code, image, type }) => {
                     <span class="pokemon-list__card-number">${code}</span>
                 </div>
                 <div class="pokemon-list__card-image">
-                    <img width="152" height="152" src="${image}" alt="Esta imagem representa o pokemon ${name}." />
+                    <img  width="152" height="152" src="${image}" alt="Esta imagem representa o pokemon ${name}." />
                 </div>
                 <strong class="pokemon-list__card-name">${name}</strong>
             </li>`;

@@ -103,7 +103,7 @@ export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
 const handleEmptySearch = async () => {
   const { data: pokemons, totalPerPage } = await getCompletePokemonData();
 
-  handleUpdatePaginationItems(1, totalPerPage);
+  handleUpdatePaginationItems(totalPerPage);
   handleUpdateActivePage(1);
   renderPokemonList(pokemons);
 };

@@ -6,6 +6,7 @@
   position: sticky;
   top: 0;
   background-color: #fff;
+  z-index: 1;
 
   .pokemon-search__form {
     width: 100%;
@@ -238,14 +239,11 @@
       font-size: 0.8125rem;
       font-weight: 700;
       color: #1e1e1e;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
 
-      &.pokemon-list__card--skeleton {
+      &.pokemon-list__card--loading {
         overflow: hidden;
-        height: 17.8125rem;
         position: relative;
+        height: 17.8125rem;
 
         &::after {
           content: "";
@@ -268,7 +266,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1.5625rem;
         color: #263156;
       }
 
