@@ -236,7 +236,7 @@
             transition: border 0.3s ease-in-out;
             background-color: #f0f3ff;
             border-radius: 0.5rem;
-            padding: 0.8125rem;
+            padding: 0.625rem 0.8125rem 0.4375rem 0.8125rem;
             font-family: "DM Sans", sans-serif, Arial, Helvetica;
             font-size: 0.8125rem;
             font-weight: 700;
@@ -263,8 +263,9 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                margin-bottom: 1.5625rem;
+                margin-bottom: 1.375rem;
                 color: #263156;
+                height: 1.9375rem;
             }
 
             & .pokemon-list__card-image {
@@ -281,9 +282,11 @@
 
             & .pokemon-list__card-name {
                 color: #212e4c;
-                padding-bottom: 2.6875rem;
+                padding-bottom: 3.0625rem;
                 text-align: center;
                 word-wrap: break-word;
+                font-size: 0.875rem;
+                line-height: 0.75rem;
             }
         }
     }
