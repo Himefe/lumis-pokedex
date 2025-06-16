@@ -26,17 +26,49 @@ Etapas:
 
 5. Tentei deixar o site com uma acessibilidade boa, então utilizei alguns arias pra facilitar isso. 
 
-# Sugestões
+# Considerações sobre a API de Pokémons
 
-Os endpoints da API da PokeAPI são bastante limitados, abaixo há algumas considerações e talvez melhoria para o caso do listagens paginadas com buscas:
+## 1. Listagem paginada de pokémons
 
-1. Listagem paginada de pokémons:
-  1.1 O endpoint paginado de pokemons deles só aceitam dois parâmetros de paginação, que são: `limit` e `offset`, com isso, utilizando a API deles para busca de pokémon só pode ser feita para um pokémon específico e utilizando um outro endpoint
-  o que não é o comum de um endpoint paginado com buscas, ex: Poderia ter no próprio endpoint paginado de pokemon um parâmetro chamado `search` da seguinte forma: `endpoint/pokemon?limit=18&offset=0&search="bulba"`, dessa forma poderia trazer
-  os pokemons com base no que foi digitado no search, seja nome, seja identificador, seja tipo do pokémon, habilidades. Então a busca por pokemon é utilizado de forma direta: Bulbassauro, mostra o Bulbassauro, caso for "Bulba", não encontra,
-  o que acaba sendo bastante limitado para dados paginados. OBS: o endpoint de busca por pokemon também aceita busca pelo id.
+### 1.1 Parâmetros de paginação
 
-2. O mesmo endpoint paginado citado acima, acaba não trazendo os dados necessários a serem apresentado de acordo com o figma, ele retorna dos pokemons apenas o nome e o endpoint de detalhes do mesmo, o que pode acarretar em uma possível sobrecarga
-   do servidor devido ao retorno da requisição da listagem paginada dos pokemons, pois se retornar 18 pokémons, terá que buscar os dados de 18 pokemons, ou seja, fazendo um total de 19 requisições: Listagem paginada + detalhes dos 18 pokémons. Acredito que o melhor
-   caminho para esse endpoint paginado seria trazer todos os dados do pokémon direto na requisição já paginada, pois seria um endpoint apenas, e não 19 no total.
+O endpoint paginado de pokémons aceita apenas dois parâmetros:
+
+- `limit`
+- `offset`
+
+Ou seja, ele não permite a busca por nome diretamente nesse endpoint. O ideal seria que houvesse um parâmetro de `search`, como no exemplo:
+
+```url
+/pokemon?limit=18&offset=0&search=bulba
+```
+
+Com isso, seria possível trazer pokémons com base no valor digitado no campo de busca (seja nome parcial, ID, tipo ou habilidade). No modelo atual, só é possível buscar diretamente por um nome ou ID exato. Por exemplo:
+
+- Buscar por `"bulbasaur"` funciona.
+- Buscar por `"bulba"` **não retorna nada**.
+
+Isso limita bastante a experiência de busca quando combinada com paginação.
+
+> **Observação:** o endpoint de busca direta por pokémon também aceita o ID numérico.
+
+---
+
+## 2. Dados retornados pelo endpoint paginado
+
+O endpoint paginado `/pokemon` retorna apenas:
+
+- Nome do pokémon
+- URL para buscar seus detalhes
+
+Ou seja, para exibir as informações completas de 18 pokémons, como exigido no layout do Figma, é necessário:
+
+- 1 requisição para a listagem paginada
+- +18 requisições (uma para cada pokémon detalhado)
+
+**Total: 19 requisições por página**
+
+Isso pode gerar uma sobrecarga desnecessária no servidor.
+
+Uma solução mais eficiente seria o endpoint paginado já retornar os dados completos de cada pokémon. Assim, bastaria **uma única requisição por página**, o que melhoraria a performance e reduziria a complexidade da aplicação.
   
