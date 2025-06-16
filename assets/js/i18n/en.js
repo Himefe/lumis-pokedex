@@ -24,8 +24,8 @@ export const enDictionary = {
             bulbassauro: "Bulbasaur",
             lagarta: "Caterpie",
             miaum: "Meowth",
-            igglybuff: "Jygglypuff",
-            "Piu-piu": "Spearow",
+            igglybuff: "Jigglypuff",
+            "piu-piu": "Spearow",
         },
     },
 };
