@@ -53,7 +53,7 @@ const formatPokemonData = (pokemonData) => {
         },
         name: capitalize(pokemonName) || "-",
         code: `#${String(pokemonData?.id).padStart(4, "0")}`,
-        image: pokemonData?.sprites?.front_default || "assets/img/not-found.png",
+        image: pokemonData?.sprites?.other?.["official-artwork"]?.front_default || "assets/img/not-found.png",
     };
 };
 
