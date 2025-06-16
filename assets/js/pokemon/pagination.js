@@ -99,8 +99,6 @@ const handlePagination = async ({ target }) => {
     const { totalPerPage } = await loadAndRenderPokemonsByPage(actualPage - 1);
     handleUpdateActivePage(actualPage - 1);
     handleUpdatePaginationItems(totalPerPage);
-
-    return;
   }
 };
 

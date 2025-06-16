@@ -1,7 +1,4 @@
-import {
-  handleUpdatePaginationItems,
-  initPaginationEvents,
-} from "./pokemon/pagination.js";
+import { initPaginationEvents } from "./pokemon/pagination.js";
 import { initSearchEvents } from "./pokemon/script.js";
 import { loadAndRenderPokemonsByPage } from "./ui/pokemon/script.js";
 

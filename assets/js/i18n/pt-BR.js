@@ -20,5 +20,12 @@ export const ptBRDictionary = {
       steel: "Metal",
       fairy: "Fada",
     },
+    names: {
+      bulbasaur: "Bulbassauro",
+      caterpie: "Lagarta",
+      meowth: "Miaum",
+      jigglypuff: "Igglybuff",
+      spearow: "Piu-piu",
+    },
   },
 };

@@ -230,6 +230,8 @@
     }
 
     & .pokemon-list__card {
+      display: flex;
+      flex-direction: column;
       border: 2px solid transparent;
       transition: border 0.3s ease-in-out;
       background-color: #f0f3ff;
@@ -354,5 +356,11 @@
   }
   100% {
     left: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pokemon-search .pokemon-search__form .pokemon-search__input {
+    padding-left: 1rem;
   }
 }

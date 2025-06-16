@@ -6,6 +6,7 @@ import {
   handleUpdateActivePage,
   handleUpdatePaginationItems,
 } from "./pagination.js";
+import { enDictionary } from "../i18n/en.js";
 
 const getPokemons = async (offset = 0, limit = 18) => {
   try {
@@ -138,14 +139,15 @@ const handleSubmitSearch = async (event) => {
   handleTogglePaginationVisibility(true);
 
   const pokemonInput = document.querySelector(".pokemon-search__input")?.value;
-  const pokemonId = (pokemonInput || "").trim().toLowerCase();
+  const lowerInput = (pokemonInput || "").trim().toLowerCase();
+  const pokemonId = enDictionary.pokemons.names[lowerInput] || lowerInput;
 
   if (!pokemonId) {
     await handleEmptySearch();
     return;
   }
 
-  await handleSearchPokemon(pokemonId);
+  await handleSearchPokemon(pokemonId.toLowerCase());
 };
 
 export const initSearchEvents = () => {

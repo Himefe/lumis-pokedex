@@ -1,3 +1,4 @@
+import { ptBRDictionary } from "../../i18n/pt-BR.js";
 import {
   handleTogglePaginationVisibility,
   handleUpdatePaginationItems,
@@ -13,15 +14,17 @@ export const showLoading = () => {
 };
 
 const generatePokemonCard = ({ name, code, image, type }) => {
+  const pokemonName = ptBRDictionary.pokemons.names[name.toLowerCase()] || name;
+
   return `<li class="pokemon-list__card" data-raw-type="${type.rawName}">
                 <div class="pokemon-list__card-details">
                     <span class="pokemon-list__card-type">${type.name}</span>
                     <span class="pokemon-list__card-number">${code}</span>
                 </div>
                 <div class="pokemon-list__card-image">
-                    <img  width="152" height="152" src="${image}" alt="Esta imagem representa o pokemon ${name}." />
+                    <img  width="152" height="152" src="${image}" alt="Esta imagem representa o pokemon ${pokemonName}." />
                 </div>
-                <strong class="pokemon-list__card-name">${name}</strong>
+                <strong class="pokemon-list__card-name">${pokemonName}</strong>
             </li>`;
 };
 
@@ -40,7 +43,7 @@ export const loadAndRenderPokemonsByPage = async (page = 1, limit = 18) => {
 
     return { totalPerPage };
   } catch (error) {
-    console.error("Ocorreu um erro ao renderizar os pokemons");
+    console.error("Ocorreu um erro ao renderizar os pokemons", error);
 
     return { totalPerPage: 0 };
   }
