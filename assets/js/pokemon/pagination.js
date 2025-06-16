@@ -58,7 +58,7 @@ export const handleUpdatePaginationItems = (totalPerPage) => {
     handleUpdatePreviousAndNextButtons(current, totalPerPage);
 };
 
-const handlePagination = async ({ target }) => {
+const handlePagination = ({ target }) => {
     const isPrevTarget = target.closest(".pagination__prev")?.classList.contains("pagination__prev");
     const isNextTarget = target.closest(".pagination__next")?.classList.contains("pagination__next");
     const isItemTarget = target.classList.contains("pagination__item");
@@ -68,26 +68,18 @@ const handlePagination = async ({ target }) => {
         if (!target.classList.contains("pagination__item--active")) {
             const page = Number(target.textContent);
 
-            const { totalPerPage } = await loadAndRenderPokemonsByPage(page);
-            handleUpdateActivePage(page);
-            handleUpdatePaginationItems(totalPerPage);
-
+            loadAndRenderPokemonsByPage(page);
             return;
         }
     }
 
     if (isNextTarget) {
-        const { totalPerPage } = await loadAndRenderPokemonsByPage(actualPage + 1);
-        handleUpdateActivePage(actualPage + 1);
-        handleUpdatePaginationItems(totalPerPage);
-
+        loadAndRenderPokemonsByPage(actualPage + 1);
         return;
     }
 
     if (isPrevTarget) {
-        const { totalPerPage } = await loadAndRenderPokemonsByPage(actualPage - 1);
-        handleUpdateActivePage(actualPage - 1);
-        handleUpdatePaginationItems(totalPerPage);
+        loadAndRenderPokemonsByPage(actualPage - 1);
     }
 };
 
