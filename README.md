@@ -9,7 +9,7 @@ Etapas:
 
 1. Clone o projeto
 2. Rode o projeto: Pode ser feito de duas maneiras:
-     2.1 No terminal, digite o seguinte comando: `npm start`, para isso é necessário ter o Node instalado, junto com o npm. Após isso, mostrará no terminal algumas URL's que está rodando o projeto, ex: `http://127.0.0.1:8080`
+     2.1 No terminal, digite o seguinte comando: `npm install` e depois `npm start`, para isso é necessário ter o Node instalado, junto com o npm. Após isso, mostrará no terminal algumas URL's que está rodando o projeto, ex: `http://127.0.0.1:8080`
      2.2 Caso esteja utilizando o editor "VS Code", basta instalar a extensão chamada: "live server". Após a instalação, no canto inferior direito terá um botão chamado: "Go Live", só clicar nele que o projeto rodará diretamente no navegador, ex: `http://127.0.0.1:5500/`
 
 
