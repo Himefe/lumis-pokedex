@@ -74,8 +74,9 @@ export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
       limit
     );
 
-    const completeData = await Promise.all(
+    const pokemonData = await Promise.allSettled(
       pokemons.map(async (pokemon) => {
+
         const pokemonData = await getPokemon(pokemon.name);
 
         if (!pokemonData) return null;
@@ -84,8 +85,15 @@ export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
       })
     );
 
+    const completeData = pokemonData.reduce((acc, curr) => {
+       if(curr.value) acc.push(curr.value)
+
+       return acc
+    }, [])
+
+
     return {
-      data: completeData.filter(Boolean),
+      data: completeData,
       totalPerPage: Math.ceil(count / limit),
     };
   } catch (error) {
