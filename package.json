@@ -1,0 +1,14 @@
+{
+  "name": "lumis-pokedex",
+  "version": "1.0.0",
+  "description": "Projeto da Lumis Experience para a vaga de desenvolvedor front-end.",
+  "scripts": {
+    "start": "http-server ./ -p 8080"
+  },
+  "keywords": [],
+  "author": "Higor de Almeida Fernandes",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
