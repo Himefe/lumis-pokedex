@@ -1,6 +1,6 @@
 import { renderPokemonList, showLoading } from "../ui/pokemon/script.js";
 import { ptBRDictionary } from "../i18n/pt-BR.js";
-import { capitalize } from "../utils.js";
+import { capitalize, normalizePokemonInput } from "../utils.js";
 import { handleTogglePaginationVisibility, handleUpdateActivePage, handleUpdatePaginationItems } from "./pagination.js";
 import { enDictionary } from "../i18n/en.js";
 
@@ -104,7 +104,7 @@ export const handleGetPaginationActivePage = () => {
 };
 
 const handleSearchPokemon = async (id) => {
-    const pokemonData = await getPokemon(id);
+    const pokemonData = await getPokemon(normalizePokemonInput(id));
 
     if (!pokemonData) {
         renderPokemonList([]);
