@@ -11,7 +11,7 @@ export const handleTogglePaginationVisibility = (hidePagination = false) => {
     pagination.removeAttribute("hidden");
 };
 
-const handleUpdateActivePage = (page) => {
+export const handleUpdateActivePage = (page) => {
     document.querySelectorAll(".pagination__item").forEach((btn) => {
         btn.classList.toggle("pagination__item--active", Number(btn.textContent) === page);
     });
@@ -62,7 +62,7 @@ const handlePagination = async ({ target }) => {
     const isPrevTarget = target.closest(".pagination__prev")?.classList.contains("pagination__prev");
     const isNextTarget = target.closest(".pagination__next")?.classList.contains("pagination__next");
     const isItemTarget = target.classList.contains("pagination__item");
-    const actualPage = Number(document.querySelector(".pagination__item--active").textContent);
+    const actualPage = Number(document.querySelector(".pagination__item--active")?.textContent || 1);
 
     if (isItemTarget) {
         if (!target.classList.contains("pagination__item--active")) {
@@ -88,8 +88,6 @@ const handlePagination = async ({ target }) => {
         const { totalPerPage } = await loadAndRenderPokemonsByPage(actualPage - 1);
         handleUpdateActivePage(actualPage - 1);
         handleUpdatePaginationItems(totalPerPage);
-
-        return;
     }
 };
 

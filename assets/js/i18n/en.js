@@ -1,0 +1,31 @@
+export const enDictionary = {
+  pokemons: {
+    types: {
+      normal: "Normal",
+      fogo: "Fire",
+      Água: "Water",
+      planta: "Grass",
+      elétrico: "Electric",
+      gelo: "Ice",
+      lutador: "Pighting",
+      veneno: "Poison",
+      terra: "Ground",
+      voador: "Flying",
+      psíquico: "Psychic",
+      inseto: "Bug",
+      pedra: "Rock",
+      fantasma: "Ghost",
+      dragão: "Dragon",
+      sombrio: "Dark",
+      metal: "Steel",
+      fada: "Fairy",
+    },
+    names: {
+      bulbassauro: "Bulbasaur",
+      lagarta: "Caterpie",
+      miaum: "Meowth",
+      igglybuff: "Jygglypuff",
+      "Piu-piu": "Spearow",
+    },
+  },
+};
