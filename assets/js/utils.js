@@ -6,7 +6,7 @@ export const normalizePokemonInput = (input) => {
     const numeric = input.replace(/^#/, "");
 
     if (!isNaN(Number(numeric))) {
-        return Number(numeric);
+        return Number(numeric).toString();
     }
 
     return input;

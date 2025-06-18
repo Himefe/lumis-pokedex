@@ -1,4 +1,7 @@
 import { loadAndRenderPokemonsByPage } from "../ui/pokemon/script.js";
+import { normalizePokemonInput } from "../utils.js";
+
+export const MAX_LIMIT_PER_PAGE = 18;
 
 export const handleTogglePaginationVisibility = (hidePagination = false) => {
     const pagination = document.querySelector(".pagination");
@@ -63,23 +66,27 @@ const handlePagination = ({ target }) => {
     const isNextTarget = target.closest(".pagination__next")?.classList.contains("pagination__next");
     const isItemTarget = target.classList.contains("pagination__item");
     const actualPage = Number(document.querySelector(".pagination__item--active")?.textContent || 1);
+    const searchInput = document.querySelector(".pokemon-search__input")?.value;
+    const normalizedInput = searchInput ? normalizePokemonInput(searchInput) : "";
+
+    const limit = searchInput ? 10000 : 18;
 
     if (isItemTarget) {
         if (!target.classList.contains("pagination__item--active")) {
             const page = Number(target.textContent);
 
-            loadAndRenderPokemonsByPage(page);
+            loadAndRenderPokemonsByPage(page, limit, normalizedInput);
             return;
         }
     }
 
     if (isNextTarget) {
-        loadAndRenderPokemonsByPage(actualPage + 1);
+        loadAndRenderPokemonsByPage(actualPage + 1, limit, normalizedInput);
         return;
     }
 
     if (isPrevTarget) {
-        loadAndRenderPokemonsByPage(actualPage - 1);
+        loadAndRenderPokemonsByPage(actualPage - 1, limit, normalizedInput);
     }
 };
 

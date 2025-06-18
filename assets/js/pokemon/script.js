@@ -1,10 +1,20 @@
-import { renderPokemonList, showLoading } from "../ui/pokemon/script.js";
+import { loadAndRenderPokemonsByPage } from "../ui/pokemon/script.js";
 import { ptBRDictionary } from "../i18n/pt-BR.js";
 import { capitalize, normalizePokemonInput } from "../utils.js";
-import { handleTogglePaginationVisibility, handleUpdateActivePage, handleUpdatePaginationItems } from "./pagination.js";
 import { enDictionary } from "../i18n/en.js";
+import { MAX_LIMIT_PER_PAGE } from "./pagination.js";
 
-const getPokemons = async (offset = 0, limit = 18) => {
+let pokemonsForSearchArr = [];
+
+export const getPokemonsForSearch = () => {
+    return pokemonsForSearchArr;
+};
+
+export const setPokemonsForSearch = (pokemons) => {
+    pokemonsForSearchArr = pokemons;
+};
+
+export const getPokemons = async (offset = 0, limit = MAX_LIMIT_PER_PAGE) => {
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
 
@@ -57,12 +67,49 @@ const formatPokemonData = (pokemonData) => {
     };
 };
 
-export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
+export const getCompletePokemonData = async (currentPage = 1, limit = MAX_LIMIT_PER_PAGE, searchText = "") => {
     try {
-        const { data: pokemons, count } = await getPokemons((currentPage - 1) * limit, limit);
+        const offset = searchText ? 0 : (currentPage - 1) * limit;
+
+        let pokemonsDataArr = [];
+        let count;
+
+        if (searchText) {
+            const lowerSearch = searchText.toLowerCase();
+
+            const possibleTranslations = Object.entries(enDictionary.pokemons.names).reduce((acc, [ptKeyName, enValue]) => {
+                if (ptKeyName.includes(lowerSearch)) {
+                    acc.push(enValue.toLowerCase());
+                }
+
+                return acc;
+            }, []);
+
+            const filteredPokemons = getPokemonsForSearch().filter(({ name, url = "" }) => {
+                const lowerName = name.toLowerCase();
+                const id = url.match(/\d+(?=\/?$)/)[0];
+
+                const hasTranslatedMatch = possibleTranslations.some((enName) => lowerName.includes(enName));
+                const hasPokemonId = id === normalizePokemonInput(searchText);
+
+                return hasPokemonId || hasTranslatedMatch || lowerName.includes(lowerSearch);
+            });
+
+            count = filteredPokemons.length;
+
+            const start = (currentPage - 1) * MAX_LIMIT_PER_PAGE;
+            const end = currentPage * MAX_LIMIT_PER_PAGE;
+
+            pokemonsDataArr = filteredPokemons.slice(start, end);
+        } else {
+            const { data: pokemons, count: apiCount } = await getPokemons(offset, limit);
+
+            pokemonsDataArr = pokemons;
+            count = apiCount;
+        }
 
         const pokemonData = await Promise.allSettled(
-            pokemons.map(async (pokemon) => {
+            pokemonsDataArr.map(async (pokemon) => {
                 const pokemonData = await getPokemon(pokemon.name);
 
                 if (!pokemonData) return null;
@@ -77,9 +124,11 @@ export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
             return acc;
         }, []);
 
+        const totalPerPage = Math.ceil(count / (searchText ? MAX_LIMIT_PER_PAGE : limit));
+
         return {
             data: completeData,
-            totalPerPage: Math.ceil(count / limit),
+            totalPerPage,
         };
     } catch (error) {
         console.error("Ocorreu um erro ao gerar os dados completos dos pokemons: ", error);
@@ -91,50 +140,22 @@ export const getCompletePokemonData = async (currentPage = 1, limit = 18) => {
     }
 };
 
-const handleEmptySearch = async () => {
-    const { data: pokemons, totalPerPage } = await getCompletePokemonData();
-
-    handleUpdatePaginationItems(totalPerPage);
-    handleUpdateActivePage(1);
-    renderPokemonList(pokemons);
-};
-
 export const handleGetPaginationActivePage = () => {
     return Number(document.querySelector(".pagination__item--active")?.textContent) || 1;
-};
-
-const handleSearchPokemon = async (id) => {
-    const pokemonData = await getPokemon(normalizePokemonInput(id));
-
-    if (!pokemonData) {
-        renderPokemonList([]);
-        handleUpdatePaginationItems(1, 1);
-        handleUpdateActivePage(1);
-        return;
-    }
-
-    const formattedPokemon = formatPokemonData(pokemonData);
-    renderPokemonList([formattedPokemon]);
-    handleUpdatePaginationItems(1, 1);
-    handleUpdateActivePage(1);
 };
 
 const handleSubmitSearch = async (event) => {
     event.preventDefault();
 
-    showLoading();
-    handleTogglePaginationVisibility(true);
-
     const pokemonInput = document.querySelector(".pokemon-search__input")?.value;
     const lowerInput = (pokemonInput || "").trim().toLowerCase();
-    const pokemonId = enDictionary.pokemons.names[lowerInput] || lowerInput;
 
-    if (!pokemonId) {
-        await handleEmptySearch();
+    if (!lowerInput) {
+        loadAndRenderPokemonsByPage(1);
         return;
     }
 
-    await handleSearchPokemon(pokemonId.toLowerCase());
+    loadAndRenderPokemonsByPage(1, 10000, lowerInput);
 };
 
 export const initSearchEvents = () => {

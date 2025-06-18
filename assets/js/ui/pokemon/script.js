@@ -1,5 +1,5 @@
 import { ptBRDictionary } from "../../i18n/pt-BR.js";
-import { handleTogglePaginationVisibility, handleUpdateActivePage, handleUpdatePaginationItems } from "../../pokemon/pagination.js";
+import { handleTogglePaginationVisibility, handleUpdateActivePage, handleUpdatePaginationItems, MAX_LIMIT_PER_PAGE } from "../../pokemon/pagination.js";
 import { getCompletePokemonData } from "../../pokemon/script.js";
 
 export const showLoading = () => {
@@ -16,20 +16,19 @@ const generatePokemonCard = ({ name, code, image, type }) => {
                     <span class="pokemon-list__card-number">${code}</span>
                 </div>
                 <div class="pokemon-list__card-image">
-                    <img  width="152" height="152" src="${image}" alt="Esta imagem representa o pokemon ${pokemonName}." />
+                    <img loading="lazy" width="152" height="152" src="${image}" alt="Esta imagem representa o pokemon ${pokemonName}." />
                 </div>
                 <strong class="pokemon-list__card-name">${pokemonName}</strong>
             </li>`;
 };
 
-export const loadAndRenderPokemonsByPage = async (page = 1, limit = 18) => {
+export const loadAndRenderPokemonsByPage = async (page = 1, limit = MAX_LIMIT_PER_PAGE, searchName = "") => {
     try {
         showLoading();
 
-        const { data: pokemons, totalPerPage } = await getCompletePokemonData(page, limit);
+        const { data: pokemons, totalPerPage } = await getCompletePokemonData(page, limit, searchName);
 
         renderPokemonList(pokemons);
-        handleTogglePaginationVisibility(false);
         handleUpdateActivePage(page);
         handleUpdatePaginationItems(totalPerPage);
     } catch (error) {
